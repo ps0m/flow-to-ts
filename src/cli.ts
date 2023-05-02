@@ -48,7 +48,8 @@ export const cli = (argv) => {
     )
     .option("--print-width [width]", "line width (depends on --prettier)", 80)
     .option("--write", "write output to disk instead of STDOUT")
-    .option("--delete-source", "delete the source file");
+    .option("--delete-source", "delete the source file")
+    .option("--end-of-line", "add end of line", /lf|crlf|cr|auto/, "lf");
 
   program.parse(argv);
 
@@ -68,6 +69,7 @@ export const cli = (argv) => {
       bracketSpacing: Boolean(program.bracketSpacing),
       arrowParens: program.arrowParens,
       printWidth: parseInt(program.printWidth),
+      endOfLine: program.endOfLine,
     },
   };
 
@@ -100,7 +102,7 @@ export const cli = (argv) => {
       const outCode = convert(inCode, options);
 
       if (program.write) {
-        const extension = detectJsx(inCode) ? ".tsx" : ".ts";
+        const extension = detectJsx(inCode) ? ".migr.tsx" : ".migr.ts";
         const outFile = file.replace(/\.jsx?$/, extension);
         fs.writeFileSync(outFile, outCode);
       } else {
