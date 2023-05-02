@@ -20,53 +20,50 @@
  * @param {*} state
  */
 export const trackComments = (node, state) => {
-  let leadingNode = node,
-    trailingNode = node;
+    let leadingNode = node,
+        trailingNode = node;
 
-  if (Array.isArray(node)) {
-    leadingNode = node[0];
-    trailingNode = node[node.length - 1];
-  }
-
-  if (leadingNode.leadingComments) {
-    for (const comment of leadingNode.leadingComments) {
-      const { start, end } = comment;
-      const key = `${start}:${end}`;
-
-      if (state.commentsToNodesMap.has(key)) {
-        state.commentsToNodesMap.get(key).leading = leadingNode;
-      } else {
-        state.commentsToNodesMap.set(key, { leading: leadingNode });
-      }
+    if (Array.isArray(node)) {
+        leadingNode = node[0];
+        trailingNode = node[node.length - 1];
     }
-  }
-  if (trailingNode.trailingComments) {
-    for (const comment of trailingNode.trailingComments) {
-      const { start, end } = comment;
-      const key = `${start}:${end}`;
 
-      if (state.commentsToNodesMap.has(key)) {
-        state.commentsToNodesMap.get(key).trailing = trailingNode;
-      } else {
-        state.commentsToNodesMap.set(key, { trailing: trailingNode });
-      }
+    if (leadingNode.leadingComments) {
+        for (const comment of leadingNode.leadingComments) {
+            const { start, end } = comment;
+            const key = `${start}:${end}`;
+
+            if (state.commentsToNodesMap.has(key)) {
+                state.commentsToNodesMap.get(key).leading = leadingNode;
+            } else {
+                state.commentsToNodesMap.set(key, { leading: leadingNode });
+            }
+        }
     }
-  }
+    if (trailingNode.trailingComments) {
+        for (const comment of trailingNode.trailingComments) {
+            const { start, end } = comment;
+            const key = `${start}:${end}`;
+
+            if (state.commentsToNodesMap.has(key)) {
+                state.commentsToNodesMap.get(key).trailing = trailingNode;
+            } else {
+                state.commentsToNodesMap.set(key, { trailing: trailingNode });
+            }
+        }
+    }
 };
 
-export function partition<T, U extends T>(
-  iter: Iterable<T>,
-  fn: (val: T) => val is U
-): [T[], U[]] {
-  const l = [],
-    r = [];
-  for (const v of iter) {
-    (fn(v) ? r : l).push(v);
-  }
-  return [l, r];
+export function partition<T, U extends T>(iter: Iterable<T>, fn: (val: T) => val is U): [T[], U[]] {
+    const l = [],
+        r = [];
+    for (const v of iter) {
+        (fn(v) ? r : l).push(v);
+    }
+    return [l, r];
 }
 
 export function returning<T>(v: T, fn: (arg: T) => unknown): T {
-  fn(v);
-  return v;
+    fn(v);
+    return v;
 }

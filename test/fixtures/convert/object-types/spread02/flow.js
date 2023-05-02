@@ -1,4 +1,4 @@
 let obj: {
-  ...T,
-  x: number,
+    ...T,
+    x: number,
 };

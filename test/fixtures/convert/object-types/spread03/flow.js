@@ -1,5 +1,5 @@
 let obj: {
-  x: number,
-  ...T,
-  y: number,
+    x: number,
+    ...T,
+    y: number,
 };

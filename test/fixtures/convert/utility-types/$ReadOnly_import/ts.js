@@ -1,2 +1,2 @@
-import { $ReadOnly } from "utility-types";
+import { $ReadOnly } from 'utility-types';
 let a: $ReadOnly<string>;

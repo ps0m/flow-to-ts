@@ -1,2 +1,2 @@
-type Key = "foo" | "bar";
+type Key = 'foo' | 'bar';
 let obj: Record<Key, string>;

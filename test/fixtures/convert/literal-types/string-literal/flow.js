@@ -1,1 +1,1 @@
-type a = "foo";
+type a = 'foo';

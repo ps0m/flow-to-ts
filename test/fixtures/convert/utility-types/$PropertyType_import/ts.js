@@ -1,2 +1,2 @@
-import { $PropertyType } from "utility-types";
+import { $PropertyType } from 'utility-types';
 type C = $PropertyType<A, B>;

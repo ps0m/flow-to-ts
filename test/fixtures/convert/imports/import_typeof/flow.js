@@ -1,1 +1,1 @@
-import typeof A from "./a.js";
+import typeof A from './a.js';

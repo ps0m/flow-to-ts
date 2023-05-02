@@ -1,5 +1,5 @@
 type A = {
-  x: number;
-  y: number;
+    x: number;
+    y: number;
 };
 type B = C;

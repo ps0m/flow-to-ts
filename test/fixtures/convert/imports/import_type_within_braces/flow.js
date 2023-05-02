@@ -1,3 +1,3 @@
 // comment before
-import { type A, B } from "./a.js";
+import { type A, B } from './a.js';
 // comment after

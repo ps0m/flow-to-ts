@@ -1,3 +1,3 @@
 let obj: T & {
-  x: number;
+    x: number;
 };

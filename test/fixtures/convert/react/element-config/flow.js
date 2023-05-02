@@ -1,3 +1,3 @@
 // @flow
-import * as React from "react";
+import * as React from 'react';
 type Props = React.ElementConfig<T>;

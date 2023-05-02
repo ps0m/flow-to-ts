@@ -1,1 +1,1 @@
-import type A from "dep";
+import type A from 'dep';

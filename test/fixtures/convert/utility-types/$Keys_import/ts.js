@@ -1,2 +1,2 @@
-import { $Keys } from "utility-types";
+import { $Keys } from 'utility-types';
 type B = $Keys<A>;

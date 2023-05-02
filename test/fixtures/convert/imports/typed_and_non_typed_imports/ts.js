@@ -1,2 +1,2 @@
-import { A } from "./depA";
-import type { B } from "./depA";
+import { A } from './depA';
+import type { B } from './depA';

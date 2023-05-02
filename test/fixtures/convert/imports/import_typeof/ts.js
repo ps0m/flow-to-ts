@@ -1,1 +1,1 @@
-type A = typeof import("./a").default;
+type A = typeof import('./a').default;

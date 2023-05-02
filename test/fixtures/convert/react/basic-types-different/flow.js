@@ -1,5 +1,5 @@
 // @flow
-import * as React from "react";
+import * as React from 'react';
 let node: React.Node;
 let text: React.Text;
 let child: React.Child;

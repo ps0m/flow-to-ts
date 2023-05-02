@@ -1,5 +1,5 @@
 type Callable<T> = {
-  <T>(): void,
-  (string): number,
-  foo: boolean,
+    <T>(): void,
+    (string): number,
+    foo: boolean,
 };

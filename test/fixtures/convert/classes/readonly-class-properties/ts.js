@@ -1,4 +1,4 @@
 export default class FooBar {
-  readonly foo: number;
-  #bar: number;
+    readonly foo: number;
+    #bar: number;
 }

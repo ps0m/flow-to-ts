@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 let node: React.ReactNode;
 let text: React.ReactText;
 let child: React.ReactChild;

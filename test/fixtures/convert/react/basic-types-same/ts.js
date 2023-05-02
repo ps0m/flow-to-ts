@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 let component: React.Component;
 let pureComponent: React.PureComponent;
 let componentType: React.ComponentType;
