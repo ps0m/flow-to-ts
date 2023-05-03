@@ -63,7 +63,6 @@ const fixComments = (commentsToNodesMap) => {
 
 export const convert = (flowCode: string, options?: any) => {
     const ast = parse(flowCode, parseOptions);
-
     // key = startLine:endLine, value = {leading, trailing} (nodes)
     const commentsToNodesMap = new Map();
 
@@ -79,6 +78,7 @@ export const convert = (flowCode: string, options?: any) => {
         commentsToNodesMap,
         startLineToComments,
     };
+    
     traverse(ast, transform, null, state);
 
     fixComments(commentsToNodesMap);
