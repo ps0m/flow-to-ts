@@ -51,16 +51,6 @@ const fixComments = (commentsToNodesMap) => {
     }
 };
 
-// const addStringToBeginFile = (commentsToNodesMap)=>{
-//   traverse(ast, {
-//   // When the current node is the Program node (so the main node)
-//   Program(path) {
-//     // Insert at the beginning a string "Hello World" --> not valid JS code
-//     path.unshiftContainer('body', t.stringLiteral("Hello World"));
-//   }
-// });
-// }
-
 export const convert = (flowCode: string, options?: any) => {
     const ast = parse(flowCode, parseOptions);
     // key = startLine:endLine, value = {leading, trailing} (nodes)
@@ -78,7 +68,7 @@ export const convert = (flowCode: string, options?: any) => {
         commentsToNodesMap,
         startLineToComments,
     };
-    
+
     traverse(ast, transform, null, state);
 
     fixComments(commentsToNodesMap);

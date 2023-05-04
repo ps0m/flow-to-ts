@@ -54,7 +54,7 @@
         "prepublishOnly": "webpack build",
         "build": "webpack build",
         "type-check": "tsc --project tsconfig.json",
-        "transform": "node bin/flow-to-ts.js --prettier --semi --single-quote --tab-width 4 --trailing-comma all --bracket-spacing --arrow-parens true --print-width 100 --write --delete-source",
+        "transform": "node bin/flow-to-ts.js --prettier --semi --single-quote --tab-width 4 --trailing-comma all --bracket-spacing --arrow-parens true --print-width 100 --write --delete-source ",
         "dev": "webpack --watch",
         "watch": "tsc --watch --project tsconfig.json",
         "test": "jest",

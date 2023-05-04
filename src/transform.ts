@@ -38,7 +38,7 @@ export const transform = {
             const { body } = path.node;
 
             // add comment eslint-disable on first line every file
-           path.addComment('leading', "eslint-disable", false);
+            path.addComment('leading', 'eslint-disable', false);
 
             for (let i = 0; i < body.length; i++) {
                 const stmt = body[i];

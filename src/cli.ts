@@ -38,7 +38,8 @@ export const cli = (argv) => {
         .option('--print-width [width]', 'line width (depends on --prettier)', 80)
         .option('--write', 'write output to disk instead of STDOUT')
         .option('--delete-source', 'delete the source file')
-        .option('--end-of-line', 'add end of line', /lf|crlf|cr|auto/, 'lf');
+        .option('--end-of-line', 'add end of line', /lf|crlf|cr|auto/, 'lf')
+        .option('--migr', "add sufix 'migr' to extension, defaults to 'false'");
 
     program.parse(argv);
 
@@ -77,6 +78,7 @@ export const cli = (argv) => {
     }
 
     const files = new Set<string>();
+
     for (const arg of program.args) {
         recursiveTraversal(arg, files);
     }
@@ -89,8 +91,13 @@ export const cli = (argv) => {
             const outCode = convert(inCode, options);
 
             if (program.write) {
-                const extension = detectJsx(inCode) ? '.migr.tsx' : '.migr.ts';
+                const resultExtension = program.migr
+                    ? { tsx: '.migr.tsx', ts: '.migr.ts' }
+                    : { tsx: '.tsx', ts: '.ts' };
+
+                const extension = detectJsx(inCode) ? resultExtension.tsx : resultExtension.ts;
                 const outFile = file.replace(/\.jsx?$/, extension);
+
                 fs.writeFileSync(outFile, outCode);
             } else {
                 console.log(outCode);
