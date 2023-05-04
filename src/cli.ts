@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import fs from 'fs';
-import glob from 'glob';
+import { recursiveTraversal } from './recursiveTraversal';
 import prettier from 'prettier';
 
 import { convert } from './convert';
@@ -78,9 +78,7 @@ export const cli = (argv) => {
 
     const files = new Set<string>();
     for (const arg of program.args) {
-        for (const file of glob.sync(arg)) {
-            files.add(file);
-        }
+        recursiveTraversal(arg, files);
     }
 
     for (const file of files) {
