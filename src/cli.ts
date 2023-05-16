@@ -2,6 +2,7 @@ import { Command } from 'commander';
 import fs from 'fs';
 import { recursiveTraversal } from './recursiveTraversal';
 import prettier from 'prettier';
+import errorList from '../errorList.json';
 
 import { convert } from './convert';
 import { detectJsx } from './detect-jsx';
@@ -13,10 +14,11 @@ export const cli = (argv) => {
         .version(version)
         .option('--inline-utility-types', "inline utility types when possible, defaults to 'false'")
         .option('--prettier', 'use prettier for formatting')
-        .option('--semi', "add semi-colons, defaults to 'false' (depends on --prettier)")
+        .option('--semi', "add semi-colons, defaults to 'false' (depends on --prettier)", true)
         .option(
             '--single-quote',
             "use single quotes instead of double quotes, defaults to 'false' (depends on --prettier)",
+            true,
         )
         .option('--tab-width [width]', 'size of tabs (depends on --prettier)', /2|4/, 4)
         .option(
@@ -33,9 +35,9 @@ export const cli = (argv) => {
             '--arrow-parens [avoid|always]',
             'arrow function param list parens (depends on --prettier)',
             /avoid|always/,
-            'avoid',
+            'always',
         )
-        .option('--print-width [width]', 'line width (depends on --prettier)', 80)
+        .option('--print-width [width]', 'line width (depends on --prettier)', 150)
         .option('--write', 'write output to disk instead of STDOUT')
         .option('--delete-source', 'delete the source file')
         .option('--end-of-line', 'add end of line', /lf|crlf|cr|auto/, 'lf')
@@ -59,23 +61,23 @@ export const cli = (argv) => {
             bracketSpacing: Boolean(program.bracketSpacing),
             arrowParens: program.arrowParens,
             printWidth: parseInt(program.printWidth),
-            endOfLine: program.endOfLine,
+            //   endOfLine: program.endOfLine,
         },
     };
 
-    if (options.prettier) {
-        try {
-            const prettierConfig = prettier.resolveConfig.sync(process.cwd());
-            if (prettierConfig) {
-                // @ts-ignore
-                options.prettierOptions = prettierConfig;
-            }
-        } catch (e) {
-            console.error('error parsing prettier config file');
-            console.error(e);
-            process.exit(1);
-        }
-    }
+    // if (options.prettier) {
+    //     try {
+    //         const prettierConfig = prettier.resolveConfig.sync(process.cwd());
+    //         if (prettierConfig) {
+    //             // @ts-ignore
+    //             options.prettierOptions = prettierConfig;
+    //         }
+    //     } catch (e) {
+    //         console.error('error parsing prettier config file');
+    //         console.error(e);
+    //         process.exit(1);
+    //     }
+    // }
 
     const files = new Set<string>();
 
@@ -83,15 +85,26 @@ export const cli = (argv) => {
         recursiveTraversal(arg, files);
     }
 
+    //   const errorListSet = new Set(errorList);
+    //   const arrList = Array.from(errorListSet);
+    //   const arrListStr = JSON.stringify(arrList);
+    //   fs.writeFileSync("errorListSet", arrListStr);
+
     for (const file of files) {
         const inFile = file;
         const inCode = fs.readFileSync(inFile, 'utf-8');
 
+        const isInErrorList = errorList.includes(file);
+
         try {
-            const outCode = convert(inCode, options);
+            const outCode = convert(inCode, options, isInErrorList);
 
             if (program.write) {
-                const resultExtension = program.migr
+                // const resultExtension = program.migr
+                //   ? { tsx: ".migr.tsx", ts: ".migr.ts" }
+                //   : { tsx: ".tsx", ts: ".ts" };
+
+                const resultExtension = isInErrorList
                     ? { tsx: '.migr.tsx', ts: '.migr.ts' }
                     : { tsx: '.tsx', ts: '.ts' };
 

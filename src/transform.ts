@@ -37,8 +37,10 @@ export const transform = {
         enter(path, state) {
             const { body } = path.node;
 
-            // add comment eslint-disable on first line every file
-            path.addComment('leading', 'eslint-disable', false);
+            if (state.hasErrorInFile) {
+                // add comment eslint-disable on first line every file
+                path.addComment('leading', 'eslint-disable', false);
+            }
 
             for (let i = 0; i < body.length; i++) {
                 const stmt = body[i];

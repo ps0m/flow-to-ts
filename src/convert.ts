@@ -51,7 +51,7 @@ const fixComments = (commentsToNodesMap) => {
     }
 };
 
-export const convert = (flowCode: string, options?: any) => {
+export const convert = (flowCode: string, options?: any, hasErrorInFile?: boolean) => {
     const ast = parse(flowCode, parseOptions);
     // key = startLine:endLine, value = {leading, trailing} (nodes)
     const commentsToNodesMap = new Map();
@@ -67,6 +67,7 @@ export const convert = (flowCode: string, options?: any) => {
         options: Object.assign({ inlineUtilityTypes: false }, options),
         commentsToNodesMap,
         startLineToComments,
+        hasErrorInFile: hasErrorInFile,
     };
 
     traverse(ast, transform, null, state);
@@ -79,8 +80,7 @@ export const convert = (flowCode: string, options?: any) => {
 
     // we pass flowCode so that generate can compute source maps
     // if we ever decide to
-    let tsCode = generate(ast, undefined, flowCode).code;
-
+    let tsCode = generate(ast, { retainLines: true }, flowCode).code;
     if (options && options.prettier) {
         const prettierOptions = {
             parser: 'typescript',
