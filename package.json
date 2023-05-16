@@ -61,16 +61,5 @@
         "coverage": "jest --coverage",
         "pretty-quick": "prettier src/*.ts test/*.ts playground/src/*.tsx --write",
         "pretty-tests": "prettier ./test/fixtures/**/ts.js --parser typescript --write && prettier ./test/fixtures/**/flow.js --parser flow --write"
-    },
-    "husky": {
-        "hooks": {
-            "pre-push": "npm test",
-            "pre-commit": "npm run pretty-quick && npm run pretty-tests"
-        }
-    },
-    "jest": {
-        "setupFilesAfterEnv": [
-            "jest-mock-console/dist/setupTestFramework.js"
-        ]
     }
 }
