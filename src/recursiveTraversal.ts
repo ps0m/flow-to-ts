@@ -10,7 +10,7 @@ export const recursiveTraversal = (root: string, files: Set<string>) => {
             const newPath = `${root}/${item}`;
             if (stat.isFile()) {
                 const extension = path.extname(newPath);
-                if (['.js', '.jsx', '.flow'].includes(extension)) {
+                if (['.js', '.jsx'].includes(extension)) {
                     files.add(newPath);
                 }
             } else {

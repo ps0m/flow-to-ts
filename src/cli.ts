@@ -7,6 +7,7 @@ import errorList from '../errorList.json';
 import { convert } from './convert';
 import { detectJsx } from './detect-jsx';
 import { version } from '../package.json';
+import { jsFlowData } from './constants';
 
 export const cli = (argv) => {
     const program = new Command();
@@ -96,6 +97,10 @@ export const cli = (argv) => {
 
         const isInErrorList = errorList.includes(file);
 
+        if (isInErrorList) {
+            continue;
+        }
+
         try {
             const outCode = convert(inCode, options, isInErrorList);
 
@@ -110,8 +115,10 @@ export const cli = (argv) => {
 
                 const extension = detectJsx(inCode) ? resultExtension.tsx : resultExtension.ts;
                 const outFile = file.replace(/\.jsx?$/, extension);
-
                 fs.writeFileSync(outFile, outCode);
+
+                // const flowForOutFile = file.replace(/\.jsx?$/, '.js.flow');
+                // fs.writeFileSync(flowForOutFile, jsFlowData);
             } else {
                 console.log(outCode);
             }
